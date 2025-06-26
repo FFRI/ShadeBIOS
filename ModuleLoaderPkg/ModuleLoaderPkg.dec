@@ -1,0 +1,8 @@
+[Defines]
+  DEC_SPECIFICATION              = 0x00010005
+  PACKAGE_NAME                   = ModuleLoaderPkg
+  PACKAGE_GUID                   = 472cd00e-0821-4d7e-9bff-7fd3060246d1
+  PACKAGE_VERSION                = 0.1
+
+[Protocols]
+  # gEfiSmmDbgProtocolGuid = { 0x78fe40fb, 0xfd3e, 0x45bb, { 0x8f, 0xff, 0xf3, 0x5d, 0x78, 0x38, 0x3d, 0xb9 } }

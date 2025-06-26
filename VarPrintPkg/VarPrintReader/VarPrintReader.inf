@@ -1,0 +1,27 @@
+# compile with GCC5
+
+[Defines]
+  INF_VERSION                    = 0x00010006
+  BASE_NAME                      = VarPrintReader
+  FILE_GUID                      = 623e74f4-9520-434f-a2d5-fa61c2cd78a1
+  MODULE_TYPE                    = UEFI_APPLICATION
+  VERSION_STRING                 = 1.0
+  ENTRY_POINT                    = UefiMain
+
+[Sources]
+  VarPrintReader.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  SecurityPkg/SecurityPkg.dec
+  VarPrintPkg/VarPrintPkg.dec
+
+[LibraryClasses]
+  UefiApplicationEntryPoint
+  UefiRuntimeServicesTableLib
+  UefiBootServicesTableLib
+  UefiLib
+  PrintLib
+  IoLib
+  DebugLib

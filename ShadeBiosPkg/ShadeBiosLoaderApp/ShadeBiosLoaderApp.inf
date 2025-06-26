@@ -1,0 +1,59 @@
+[Defines]
+  INF_VERSION                    = 0x00010006
+  BASE_NAME                      = ShadeBiosLoaderApp
+  FILE_GUID                      = b0e69632-2337-49c5-bd6c-d597569b07c6
+  MODULE_TYPE                    = UEFI_APPLICATION
+  VERSION_STRING                 = 1.0
+  ENTRY_POINT                    = UefiMain
+
+[Sources]
+  ShadeBiosLoaderApp.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  VarPrintPkg/VarPrintPkg.dec
+  NetworkPkg/NetworkPkg.dec
+
+[LibraryClasses]
+  UefiApplicationEntryPoint
+  UefiLib
+  IoLib
+  PrintLib
+  BaseLib
+  BaseMemoryLib
+  UefiRuntimeServicesTableLib
+  UefiBootServicesTableLib
+  DevicePathLib
+  VarPrintLib
+  NetLib
+
+[Guids]
+  gEfiEndOfDxeEventGroupGuid
+  gEfiFileInfoGuid
+
+[Protocols]
+  # gEfiDummyProtocolGuid
+  # gEfiHttpServiceBindingProtocolGuid
+  # gEfiHttpProtocolGuid
+  gEfiPciRootBridgeIoProtocolGuid
+  gEfiSmmBase2ProtocolGuid             ## CONSUMES
+  gEfiHttpProtocolGuid                 ## CONSUMES
+  gEfiHttpServiceBindingProtocolGuid   ## CONSUMES
+  gEfiCpuArchProtocolGuid              ## CONSUMES
+  gEfiTimerArchProtocolGuid            ## CONSUMES
+  gEfiSimpleNetworkProtocolGuid        ## CONSUMES
+  gEfiTcp4ServiceBindingProtocolGuid   ## CONSUMES
+  gEfiIp4ServiceBindingProtocolGuid    ## CONSUMES
+  gEfiIp4ProtocolGuid                  ## CONSUMES
+  gEfiTcp4ProtocolGuid                 ## CONSUMES
+  gEfiDhcp4ServiceBindingProtocolGuid  ## CONSUMES
+  gEfiArpServiceBindingProtocolGuid    ## CONSUMES
+  gEfiDns4ServiceBindingProtocolGuid   ## CONSUMES
+  gEfiUdp4ServiceBindingProtocolGuid   ## CONSUMES
+  gEfiManagedNetworkServiceBindingProtocolGuid   ## CONSUMES
+  gEfiUsbIoProtocolGuid                ## CONSUMES
+  gEfiBlockIoProtocolGuid              ## CONSUMES
+
+[Depex]
+  TRUE

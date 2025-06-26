@@ -1,0 +1,30 @@
+# compile with GCC5
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = VarPrintLib
+  MODULE_UNI_FILE                = VarPrintLib.uni
+  FILE_GUID                      = f595273c-1cda-4d26-814b-e5152f0e4321
+  MODULE_TYPE                    = BASE
+  VERSION_STRING                 = 1.0
+  LIBRARY_CLASS                  = PrintLib
+
+[Sources]
+  VarPrintLib.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  VarPrintPkg/VarPrintPkg.dec
+
+[LibraryClasses]
+  UefiLib
+  PrintLib
+  IoLib
+  DebugLib
+  UefiRuntimeServicesTableLib
+  UefiBootServicesTableLib
+  DebugLib
+
+[Pcd]
+

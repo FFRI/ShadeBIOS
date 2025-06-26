@@ -1,0 +1,7 @@
+[Defines]
+  DEC_SPECIFICATION              = 0x00010005
+  PACKAGE_NAME                   = ShadeBiosPkg
+  PACKAGE_GUID                   = b06ef1d6-b8d4-4324-ad93-4433a5b35d7e
+  PACKAGE_VERSION                = 0.1
+
+[Protocols]

@@ -1,0 +1,38 @@
+# compile with GCC5
+
+[Defines]
+  INF_VERSION                    = 0x00010006
+  BASE_NAME                      = ModuleLoader
+  FILE_GUID                      = 623e74f4-9520-434f-a2d5-fa61c2cd78a1
+  MODULE_TYPE                    = DXE_DRIVER
+  VERSION_STRING                 = 1.0
+  ENTRY_POINT                    = DriverEntry
+
+[Sources]
+  ModuleLoader.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+  SecurityPkg/SecurityPkg.dec
+  ModuleLoaderPkg/ModuleLoaderPkg.dec
+  VarPrintPkg/VarPrintPkg.dec
+
+[LibraryClasses]
+  UefiDriverEntryPoint
+  UefiRuntimeServicesTableLib
+  UefiBootServicesTableLib
+  UefiLib
+  PrintLib
+  IoLib
+  DebugLib
+  VarPrintLib
+
+[Guids]
+  gEfiFileInfoGuid
+  gEfiEndOfDxeEventGroupGuid
+
+[Protocols]
+
+[Depex]
+	TRUE

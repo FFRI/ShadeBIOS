@@ -1,0 +1,11 @@
+[Defines]
+  DEC_SPECIFICATION              = 0x00010005
+  PACKAGE_NAME                   = VarPrintPkg
+  PACKAGE_GUID                   = 57a0c5e3-5917-42eb-8fe1-551b65d7357c
+  PACKAGE_VERSION                = 0.1
+
+[Includes]
+  Include
+
+[LibraryClasses]
+  VarPrintLib|Include/Library/VarPrintLib.h

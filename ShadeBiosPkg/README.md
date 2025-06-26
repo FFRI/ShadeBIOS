@@ -1,17 +1,17 @@
 # Shade BIOS
 Most of UEFI BIOS functionalities are lost after OS boot.
-Therefore, UEFI malwares find it hard to perform malfunctions (such as C2 communication) in runtime only with the BIOS code, and rely on the kernel or userland afterall.
+Therefore, UEFI malware find it hard to perform malicious activities (such as C2 communication) in runtime only with the BIOS code, and rely on the kernel or userland after all.
 Although they infect to the BIOS which has higher privilege than the OS, they are dependent on OS-level security and struggles to unleash its full potential of stealth.
 
 Shade BIOS retains the BIOS after OS boot for OS-independent pure-BIOS malbehavior.
-This work is presented at [Black Hat USA 2025](https://www.blackhat.com/us-25/briefings/schedule/#shade-bios-unleashing-the-full-stealth-of-uefi-malware-45786), and please refer the slides for explanation of the inner workings.
+This work is presented at [Black Hat USA 2025](https://www.blackhat.com/us-25/briefings/schedule/#shade-bios-unleashing-the-full-stealth-of-uefi-malware-45786), and please refer to the slides for explanation of the inner workings.
 This repository contains the **STRIPPED** PoC code of Shade BIOS for security purpose.
 If you require the full source code, please contact us via email (research-feedback@ffri.jp). Once your identity is verified, we will send it to you directly.
 
 
 ## Components
 - ShadeBiosDxe (DXE driver): Main DXE module which implements Shade BIOS
-- ShadeBiosLoaderApp (UEFI app): This is for ESP infection. Loads ShadeBiosDxe and executes bootmgfw.efi afterwards
+- ShadeBiosLoaderApp (UEFI app): This is for ESP infection. It loads ShadeBiosDxe and executes bootmgfw.efi afterwards
 
 ## Installation & Usage
 1. Prepare EDK2
@@ -38,7 +38,7 @@ Place ShadeBiosDxe.efi at the root of USB storage device and execute ShadeBiosLo
 ## Debugging Tips
 - Runtime BIOS code can be debugged by WinDbg! (`bcdedit /set bootdebug on`)
     - Just set `__asm__ __volatile__("int3");` in the source code, build it and execute it and WinDbg will break in
-- There are no symbols so if you don't know where you are when jumped to the different UEFI modules, just copy multiple bytes from RIP and search for those byte patterns using [UEFITool](https://github.com/LongSoft/UEFITool)
+- There are no symbols so if you don't know where you are when jumping to the different UEFI modules, just copy multiple bytes from RIP and search for those byte patterns using [UEFITool](https://github.com/LongSoft/UEFITool)
 - If you want to check if the ControllerHandle is properly configured, try checking the installed protocol on that handle referring [IHANDLE](https://github.com/tianocore/edk2/blob/e489721275eafd89037c90df7cd99e0e511bb3ba/MdeModulePkg/Core/Dxe/Hand/Handle.h#L44) (`EFI_HANDLE` = `IHANDLE*`)
 
 
@@ -60,7 +60,7 @@ Here, I will introduce the key events that occur in chronological order to assis
         1. StealMemoryForHeap: save some of EfiConventionalMemory to use as a Shade BIOS heap in runtime
         1. DisguiseMemoryMap: modify EfiBootServicesData/Code => EfiRuntimeServicesData/Code to retain BIOS environments
 1. SetVirtualAddressMapEvent
-    1. Convert global pointers that contains physical addresses to virtual address
+    1. Convert global pointers that contain physical addresses to virtual address
 
 #### Runtime phase
 1. SetVariableHook

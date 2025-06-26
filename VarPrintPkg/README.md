@@ -1,5 +1,5 @@
 # VarPrintLib & VarPrintReader
-In some system, you cannot use `Print(L"");` even if you try connecting all the controller handles.  
+In some systems, you cannot use `Print(L"");` even if you try to connect all the controller handles.  
 This library allows to print debug messages or status to the `VarPrint*` UEFI variables, allowing to get the variable contents and check them later.
 
 
@@ -27,7 +27,7 @@ This library allows to print debug messages or status to the `VarPrint*` UEFI va
     1. `TOOL_CHAIN_TAG = GCC5`
 1. `source edksetup.sh` & `build`
 
-Then, setup just like the other EDK2 libraries, `#include <Library/VarPrintLib.h>`, and use library functions listed in Features.
+Then, set up just like the other EDK2 libraries, `#include <Library/VarPrintLib.h>`, and use library functions listed in Features.
 Also, VarPrintReader.efi will be created (can be executed via UEFI shell).
 
 

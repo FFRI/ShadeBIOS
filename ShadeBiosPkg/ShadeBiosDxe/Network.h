@@ -1,3 +1,9 @@
+/*
+ * (c) FFRI Security, Inc., 2025 / Author: FFRI Security, Inc.
+ */
+
+
+
 #include <Library/NetLib.h>
 #include <Protocol/SimpleNetwork.h>
 #include <Protocol/Ip4.h>

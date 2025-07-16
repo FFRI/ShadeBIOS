@@ -1,17 +1,19 @@
 # Shade BIOS
-Most of UEFI BIOS functionalities are lost after OS boot.
-Therefore, UEFI malware find it hard to perform malicious activities (such as C2 communication) in runtime only with the BIOS code, and rely on the kernel or userland after all.
-Although they infect to the BIOS which has higher privilege than the OS, they are dependent on OS-level security and struggles to unleash its full potential of stealth.
+Most UEFI BIOS functionalities are lost after OS boot.
+Therefore, UEFI malware finds it difficult to perform malicious activities (such as C2 communication) at runtime using only the BIOS code and relies on the kernel or userland.
+Although they infect the BIOS, which has higher privileges than the OS, they are dependent on OS-level security and struggle to unleash the full potential of stealth.
 
 Shade BIOS retains the BIOS after OS boot for OS-independent pure-BIOS malbehavior.
-This work is presented at [Black Hat USA 2025](https://www.blackhat.com/us-25/briefings/schedule/#shade-bios-unleashing-the-full-stealth-of-uefi-malware-45786), and please refer to the slides for explanation of the inner workings.
-This repository contains the **STRIPPED** PoC code of Shade BIOS for security purpose.
-If you require the full source code, please contact us via email (research-feedback@ffri.jp). Once your identity is verified, we will send it to you directly.
+This work was presented at [Black Hat USA 2025](https://www.blackhat.com/us-25/briefings/schedule/#shade-bios-unleashing-the-full-stealth-of-uefi-malware-45786).
+Please refer to the slides for an explanation of the inner workings.
+For security reasons, this repository only contains the **STRIPPED** PoC code of Shade BIOS.
+If you require the full source code, please contact us via email (research-feedback@ffri.jp).
+Once your identity has been verified, I will send it directly to you.
 
 
 ## Components
-- ShadeBiosDxe (DXE driver): Main DXE module which implements Shade BIOS
-- ShadeBiosLoaderApp (UEFI app): This is for ESP infection. It loads ShadeBiosDxe and executes bootmgfw.efi afterwards
+- ShadeBiosDxe (DXE driver): Main DXE module that implements Shade BIOS
+- ShadeBiosLoaderApp (UEFI app): This is used for ESP infection. First, it loads ShadeBiosDxe and subsequently executes bootmgfw.efi
 
 ## Installation & Usage
 1. Prepare EDK2
@@ -20,32 +22,32 @@ If you require the full source code, please contact us via email (research-feedb
     1. `ACTIVE_PLATFORM = ShadeBiosPkg/ShadeBiosPkg.dsc`
     1. `TARGET_ARCH = X64`
     1. `TOOL_CHAIN_TAG = GCC5`
-        1. VS cannot use inline assembly so only GCC is supported
+        1. VS cannot use inline assembly; thus, only GCC is supported
 1. `source edksetup.sh` & `build` => ShadeBiosDxe.efi is created
-1. Run this DXE module (Flash it in SPI flash, include in OROM, ...)
+1. Run this DXE module (Flash it in SPI flash, included in OROM, ...)
 
-Malbehavior of Shade BIOS can be triggered automatically from OS by hooking the frequently used Efi Runtime Services such as `gRT->GetVariable()`.
-In the current implementation, it is triggered by writing to the UEFI variable L`MyRtDxeTrig` so that you can execute the malbehavior on demand.
-Writing to the UEFI variable can be done from userland executable (require admin priv) calling such OS apis like [SetFirmwareEnvironmentVariableExA](https://learn.microsoft.com/ja-jp/windows/win32/api/winbase/nf-winbase-setfirmwareenvironmentvariableexa).
+The malbehavior of Shade BIOS can be triggered automatically from the OS by hooking frequently used EFI Runtime Services such as `gRT->GetVariable()`.
+In the current implementation, it is triggered by writing to the UEFI variable L`MyRtDxeTrig` such that the malbehavior can be executed on demand.
+Writing to the UEFI variable is possible from the userland executable (requires admin priv), by calling such OS APIs as [SetFirmwareEnvironmentVariableExA](https://learn.microsoft.com/ja-jp/windows/win32/api/winbase/nf-winbase-setfirmwareenvironmentvariableexa).
 
-Flashing the ROM every time is quite a tedious task. Therefore, I created ModuleLoaderPkg, a DXE module that reads and executes DXE modules from USB stick. With this, you can simply place the `.efi` file in USB and execute BIOS code in that machine.
+Flashing the ROM each time is a tedious task. Therefore, I created ModuleLoaderPkg, a DXE module that reads and executes DXE modules from a USB stick. Using this module, you can simply place the `.efi` file in the USB and execute BIOS code on that machine.
 
 **ShadeBios also works with ESP infection.**  
-Place ShadeBiosDxe.efi at the root of USB storage device and execute ShadeBiosLoaderApp on UEFI shell.
+Place ShadeBiosDxe.efi at the root of the USB storage device and execute ShadeBiosLoaderApp on the UEFI shell.
 
 
 
 ## Debugging Tips
 - Runtime BIOS code can be debugged by WinDbg! (`bcdedit /set bootdebug on`)
     - Just set `__asm__ __volatile__("int3");` in the source code, build it and execute it and WinDbg will break in
-- There are no symbols so if you don't know where you are when jumping to the different UEFI modules, just copy multiple bytes from RIP and search for those byte patterns using [UEFITool](https://github.com/LongSoft/UEFITool)
-- If you want to check if the ControllerHandle is properly configured, try checking the installed protocol on that handle referring [IHANDLE](https://github.com/tianocore/edk2/blob/e489721275eafd89037c90df7cd99e0e511bb3ba/MdeModulePkg/Core/Dxe/Hand/Handle.h#L44) (`EFI_HANDLE` = `IHANDLE*`)
+- No symbols are present; thus, if you do not know where you are when jumping to the different UEFI modules, only copy multiple bytes from RIP and search for those byte patterns using [UEFITool](https://github.com/LongSoft/UEFITool)
+- If you want to check whether the ControllerHandle is properly configured, attempt checking the installed protocol on that handle referring to [IHANDLE](https://github.com/tianocore/edk2/blob/e489721275eafd89037c90df7cd99e0e511bb3ba/MdeModulePkg/Core/Dxe/Hand/Handle.h#L44) (`EFI_HANDLE` = `IHANDLE*`)
 
 
 
 ## How it works
-If you refer to the presentation materials, you can find a detailed explanation of the mechanism.
-Here, I will introduce the key events that occur in chronological order to assist you with debugging or reading source code.
+You can find a detailed explanation of the mechanism if you refer to the presentation materials.
+Here, I introduce the key events that occur in chronological order to assist in debugging or reading the source code.
 
 #### Boot phase
 1. DriverEntry
@@ -66,10 +68,10 @@ Here, I will introduce the key events that occur in chronological order to assis
 1. SetVariableHook
     1. If `VarName != MAGIC_VAR_NAME` then execute the original SetVariable and return
     1. Locate ntoskrnl.exe and get `nt!MmGetVirtualForPhysical` address
-        1. This 1 kernel export must be used, but this cannot be the detection point from OS-level security (refer slides)
+        1. This one kernel export must be used, but it cannot be the detection point for OS-level security (refer to slides)
     1. Steal some secrets from the target process
     1. ShadeBiosEnter()
-        1. Modify gRT address from vir to phy address (since we partial identity map)
+        1. Modify gRT address from vir to phy address (as we perform partial identity mapping)
         1. Enable partial identity mapping
             1. Allows execution of physical address
             1. Cannot access userland virtual address while this is enabled
@@ -80,7 +82,7 @@ Here, I will introduce the key events that occur in chronological order to assis
         1. Initialize Shade BIOS heap (prevent BIOS memory allocator from using OS memory)
     1. Hijacking Device Control
         1. If you want to use NIC, use HijackNicFromOS()
-        1. Hijack functions does the followings in common
+        1. Hijack functions perform the following in common:
             1. Get ControllerHandle of the target device
             1. `gBS->DisconnectController(ControllerHandle)` to reset the device
             1. `gBS->ConnectController(ControllerHandle)` to configure the device for BIOS to use

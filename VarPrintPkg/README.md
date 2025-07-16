@@ -1,6 +1,6 @@
 # VarPrintLib & VarPrintReader
-In some systems, you cannot use `Print(L"");` even if you try to connect all the controller handles.  
-This library allows to print debug messages or status to the `VarPrint*` UEFI variables, allowing to get the variable contents and check them later.
+In some systems, `Print(L"");` cannot be used, even if you try connecting all the controller handles.  
+This library allows the printing of debug messages or statuses to the `VarPrint*` UEFI variables, allowing the variable content to be obtained and checked later.
 
 
 ## Features
@@ -11,11 +11,11 @@ This library allows to print debug messages or status to the `VarPrint*` UEFI va
 - `VarLogStatus(0xAA)`: Writes single byte to `VarLogStatus` variable
     - Latest 32 status are stored
 - `VarPrintLargeBin(PtrToLargeData)`: Writes large binary data (up to 0x400 byte) to `VarLargeVar` variable
-    - Only 1 data is stored
+    - Only 1 data point is stored
 - `VarErase()`: Clear all messages and status
 
 #### VarPrintReader
-- UEFI app (execute via UEFI shell) to print var-printed messages/status/binaries.
+- UEFI app (execute via the UEFI shell) to print var-printed messages/status/binaries.
 
 
 ## Installation
@@ -27,8 +27,8 @@ This library allows to print debug messages or status to the `VarPrint*` UEFI va
     1. `TOOL_CHAIN_TAG = GCC5`
 1. `source edksetup.sh` & `build`
 
-Then, set up just like the other EDK2 libraries, `#include <Library/VarPrintLib.h>`, and use library functions listed in Features.
-Also, VarPrintReader.efi will be created (can be executed via UEFI shell).
+Then, set up similar to the other EDK2 libraries, `#include <Library/VarPrintLib.h>`, and use the library functions listed in "Features".
+In addition, VarPrintReader.efi is created (which can be executed via the UEFI shell).
 
 
 

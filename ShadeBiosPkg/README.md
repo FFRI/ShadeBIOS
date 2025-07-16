@@ -1,4 +1,4 @@
-# Shade BIOS
+# Shade BIOS (stripped)
 Most UEFI BIOS functionalities are lost after OS boot.
 Therefore, UEFI malware finds it difficult to perform malicious activities (such as C2 communication) at runtime using only the BIOS code and relies on the kernel or userland.
 Although they infect the BIOS, which has higher privileges than the OS, they are dependent on OS-level security and struggle to unleash the full potential of stealth.
